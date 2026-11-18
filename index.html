@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Podiatry Learning Lab — Version 16</title><style>:root{font-family:system-ui,-apple-system,sans-serif;color:#e8eefb;background:#0b1220}*{box-sizing:border-box}body{margin:0}header{background:#14213a;padding:20px 5%;border-bottom:1px solid #34445f}h1{margin:0;font-size:1.6rem}p{color:#a9bbd5}main{max-width:1080px;margin:auto;padding:24px}button,select{font:inherit;border-radius:10px;padding:12px 16px;border:1px solid #50617d;background:#1b2c49;color:white;cursor:pointer}button:hover{background:#29476e}button:focus-visible,select:focus-visible{outline:3px solid #7bc5ff}button.primary{background:#2478ba;border-color:#2478ba}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.tile,.panel{background:#14213a;border:1px solid #34445f;border-radius:16px;padding:20px}.tile{text-align:left;min-height:135px}.tile strong{display:block;font-size:1.2rem;margin-bottom:12px}.muted{color:#a9bbd5}.hidden{display:none}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.card{min-height:210px;display:grid;place-items:center;text-align:center;padding:28px;background:#1b2c49;border-radius:16px;margin:18px 0;font-size:1.35rem;line-height:1.5;cursor:pointer}.tag{font-size:.8rem;color:#a9bbd5}#feedback{padding:12px;margin:10px 0}footer{padding:20px;text-align:center;color:#a9bbd5}a{color:#8cd4ff}@media(max-width:500px){main{padding:12px}.card{min-height:250px}}</style>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Podiatry Learning Lab — Subject Study Hub</title><style>:root{font-family:system-ui,-apple-system,sans-serif;color:#e8eefb;background:#0b1220}*{box-sizing:border-box}body{margin:0}header{background:#14213a;padding:20px 5%;border-bottom:1px solid #34445f}h1{margin:0;font-size:1.6rem}p{color:#a9bbd5}main{max-width:1080px;margin:auto;padding:24px}button,select{font:inherit;border-radius:10px;padding:12px 16px;border:1px solid #50617d;background:#1b2c49;color:white;cursor:pointer}button:hover{background:#29476e}button:focus-visible,select:focus-visible{outline:3px solid #7bc5ff}button.primary{background:#2478ba;border-color:#2478ba}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.tile,.panel{background:#14213a;border:1px solid #34445f;border-radius:16px;padding:20px}.tile{text-align:left;min-height:135px}.tile strong{display:block;font-size:1.2rem;margin-bottom:12px}.muted{color:#a9bbd5}.hidden{display:none}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.card{min-height:210px;display:grid;place-items:center;text-align:center;padding:28px;background:#1b2c49;border-radius:16px;margin:18px 0;font-size:1.35rem;line-height:1.5;cursor:pointer}.tag{font-size:.8rem;color:#a9bbd5}#feedback{padding:12px;margin:10px 0}footer{padding:20px;text-align:center;color:#a9bbd5}a{color:#8cd4ff}@media(max-width:500px){main{padding:12px}.card{min-height:250px}}</style>
 <style>
 :root{color:#17283e;background:#f5f8fc;color-scheme:light}
 body{background:#f5f8fc;color:#17283e}
@@ -73,6 +73,13 @@ footer{margin-left:0}
 .v17-figure{max-width:680px;width:100%;height:auto;border-radius:12px;display:block;margin:12px auto}
 body.v17-hub-active #v12Library,body.v17-hub-active #v16Study,body.v17-hub-active #v13Atlas,body.v17-hub-active footer,body.v17-hub-active #dashboard{display:none!important}
 @media(max-width:800px){.v17-grid{grid-template-columns:1fr}.v17-head{flex-direction:column;align-items:flex-start}.v17-content{padding:13px}.v17-tabs button{padding:10px;font-size:.88rem}}
+</style><style id="v19-cleanup">
+/* Version 19: one subject-centred interface; legacy content retained internally for compatibility. */
+#v12Library,#v16Study,#v13Atlas,body>footer{display:none!important}
+html,body{max-width:100%;overflow-x:hidden}
+#v17Hub,#v17Hub *{box-sizing:border-box}
+#v17Hub{max-width:100%;min-width:0}
+@media(max-width:800px){#v17Hub{padding-left:12px;padding-right:12px}}
 </style></head><body><nav aria-label="Learning Lab navigation" id="labSidebar">
 <div class="brand">🎓 Learning Lab</div>
 <div class="navlabel">Study space</div>
@@ -514,7 +521,7 @@ content.prepend(block);
 function addExamButton(){
 if(content.querySelector('#v18Launch'))return;
 const wrap=document.createElement('div');wrap.id='v18Launch';wrap.className='v17-tile';
-wrap.innerHTML='<h3>⏱️ Version 18 · Timed practical & applied anatomy exam</h3><p>20 questions, 15-minute timer, immediate score and detailed answer review. Includes bone tissue, knee anatomy, respiratory physiology and lower-limb clinical anatomy.</p><button class="v18-btn primary" id="v18Start">Start timed exam</button><p class="v17-muted">Text-based applied anatomy exam. The existing image-hotspot identification quiz remains accessible through the full interactive anatomy lab.</p>';
+wrap.innerHTML='<h3>⏱️ Timed practical & applied anatomy exam</h3><p>20 questions, 15-minute timer, immediate score and detailed answer review. Includes bone tissue, knee anatomy, respiratory physiology and lower-limb clinical anatomy.</p><button class="v18-btn primary" id="v18Start">Start timed exam</button><p class="v17-muted">Text-based applied anatomy exam. The existing image-hotspot identification quiz remains accessible through the full interactive anatomy lab.</p>';
 content.prepend(wrap);wrap.querySelector('#v18Start').onclick=()=>showExam();
 }
 function renderExtras(){
