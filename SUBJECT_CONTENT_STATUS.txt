@@ -1,0 +1,6 @@
+ANA1500: existing bone/connective/joints and additional overview summaries
+ANA1501: topic overviews, full slides not yet integrated
+ANA1504: topic overviews plus existing interactive hip/pelvis atlas
+PHB1101: lecture topics and supplementary summaries
+POD1002: preliminary overview, requires lecture-slide integration
+POD1006: preliminary dermatology overview, requires lecture-slide integration
