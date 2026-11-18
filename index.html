@@ -586,20 +586,50 @@ function v20Draw(){const root=document.getElementById('v20Atlas');if(!root)retur
 window.v20Move=function(i){move=i;v20Reset();v20Draw()};window.v20MuscleChange=function(i){muscle=Number(i);v20Draw()};window.v20View=function(i){view=i;v20Reset();v20Init()};window.v20Reset=function(){const art=document.getElementById('v20Art');if(art){art.classList.remove('playing');void art.offsetWidth}if(timer)clearTimeout(timer)};window.v20Play=function(){v20Reset();const art=document.getElementById('v20Art');if(!art)return;art.classList.add('playing');timer=setTimeout(()=>art.classList.remove('playing'),5100)};
 const obs=new MutationObserver(()=>{if(document.getElementById('v20Atlas')&&!document.getElementById('v20Image').getAttribute('src'))v20Init()});obs.observe(document.getElementById('v17Content'),{childList:true});
 })();
-</script><style id="ana-pdf-style">#anaPdfPanel{margin-top:20px;padding:18px;background:#f5f9ff;border:1px solid #c9dbea;border-radius:15px}#anaPdfPanel .pdfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:7px}#anaPdfPanel .pdflecture{text-align:left;white-space:normal;padding:11px;background:#fff}#anaPdfPanel .pdflecture.selected{background:#1768ab;color:#fff}#anaPdfPanel iframe{width:100%;height:70vh;min-height:480px;border:1px solid #c7d8e9;border-radius:12px;background:white;margin-top:12px}#anaPdfPanel .pdf-open{display:inline-block;margin-top:10px;font-weight:700}#anaPdfPanel .pdfnotice{color:#536c86;font-size:.92rem}</style>
-<script>
+</script><style id="lecture-pdf-v21">
+#lecturePdfPanel{margin-top:16px;background:#f5f9ff;border:1px solid #cbdceb;border-radius:15px;padding:16px}
+#lecturePdfPanel .pdfgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:8px;margin:12px 0}
+#lecturePdfPanel .pdflecture{white-space:normal;text-align:left;background:#fff;border:1px solid #bfd2e6;padding:12px;border-radius:10px}
+#lecturePdfPanel .pdflecture.selected{background:#1768ab;color:#fff}
+#lecturePdfPanel iframe{display:block;width:100%;height:68vh;min-height:420px;background:white;border:1px solid #cad9e8;border-radius:12px;margin-top:14px}
+#lecturePdfPanel .pdfactions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:12px 0}
+#lecturePdfPanel .pdfactions a{font-weight:700}
+#lecturePdfPanel .pdfnote{font-size:.9rem;color:#627890}
+</style>
+<script id="lecture-pdf-v21">
 (function(){
- const library="<button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Anatomy of the Thoracic Cavity(1).pdf\">Anatomy of the Thoracic Cavity(1)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Anatomy of the Thoracic Wall(1).pdf\">Anatomy of the Thoracic Wall(1)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Blood Tissue(2).pdf\">Blood Tissue(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Bone Tissue(3).pdf\">Bone Tissue(3)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Connective Tissues(2).pdf\">Connective Tissues(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Contractile Cells and Muscle Tissues(2).pdf\">Contractile Cells and Muscle Tissues(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Embryological Development of Bone and Bone Remodelling(2).pdf\">Embryological Development of Bone and Bone Remodelling(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Epithelia and Glands(2).pdf\">Epithelia and Glands(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Introduction to ANA 1500 \u2013 General(2).pdf\">Introduction to ANA 1500 \u2013 General(2)</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/Skin.pdf\">Skin</button><button type=\"button\" class=\"pdflecture\" data-pdf=\"lectures/ANA1500_Joints.pdf\">ANA1500_Joints</button>";
- function setup(){const hub=document.getElementById('v17Hub');if(!hub)return;
- const panel=document.createElement('section');panel.id='anaPdfPanel';panel.hidden=true;
- panel.innerHTML='<h3>📚 ANA1500 — Original lecture PDFs</h3><p class="pdfnotice">Select a lecture to read the original slides and diagrams. These are complete lecture PDFs, not the condensed study notes. If the embedded viewer does not work in Safari, use Open PDF.</p><div class="pdfgrid">'+library+'</div><p id="anaPdfSelected"></p><a class="pdf-open" id="anaPdfOpen" target="_blank" rel="noopener" href="#">Open PDF in new tab</a><iframe id="anaPdfFrame" title="Original ANA1500 lecture PDF" loading="lazy"></iframe>';
- hub.appendChild(panel);
- const select=(b)=>{panel.querySelectorAll('.pdflecture').forEach(x=>x.classList.toggle('selected',x===b));const url=b.dataset.pdf;document.getElementById('anaPdfSelected').textContent='Viewing: '+b.textContent;document.getElementById('anaPdfOpen').href=url;document.getElementById('anaPdfFrame').src=url;};
- panel.querySelectorAll('.pdflecture').forEach(b=>b.addEventListener('click',()=>select(b)));
- const header=hub.querySelector('.v17-head');const btn=document.createElement('button');btn.id='anaPdfButton';btn.textContent='📄 Original lecture PDFs (11)';btn.style.margin='8px 0 15px';btn.onclick=()=>{panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'});if(!document.getElementById('anaPdfFrame').getAttribute('src'))select(panel.querySelector('.pdflecture'))};header.after(btn);
- const original=window.v17Open;window.v17Open=function(key,which){original(key,which);let isANA=key==='ANA1500_General_Anatomy'||key==='ANA1500';btn.hidden=!isANA;panel.hidden=!isANA;};
- const back=window.v17Back;window.v17Back=function(){panel.hidden=true;back()};
- btn.hidden=true;
+ const groups={
+ 'ANA1500_General_Anatomy':[
+ ['Introduction to ANA1500','Introduction to ANA 1500 – General(2).pdf'],
+ ['Bone Tissue','Bone Tissue(3).pdf'],
+ ['Bone Development & Remodelling','Embryological Development of Bone and Bone Remodelling(2).pdf'],
+ ['Joints','ANA1500_Joints.pdf'],
+ ['Connective Tissues','Connective Tissues(2).pdf'],
+ ['Blood Tissue','Blood Tissue(2).pdf'],
+ ['Contractile Cells and Muscle Tissues','Contractile Cells and Muscle Tissues(2).pdf'],
+ ['Skin','Skin.pdf']],
+ 'ANA1501_Regional_Anatomy':[
+ ['Anatomy of the Thoracic Cavity','Anatomy of the Thoracic Cavity(1).pdf'],
+ ['Anatomy of the Thoracic Wall','Anatomy of the Thoracic Wall(1).pdf']]
+ };
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let activeKey=null, selected='';
+ function ensure(){let hub=document.getElementById('v17Hub');if(!hub)return null;let panel=document.getElementById('lecturePdfPanel');if(!panel){panel=document.createElement('section');panel.id='lecturePdfPanel';panel.hidden=true;hub.appendChild(panel)}return panel}
+ function draw(key){const panel=ensure();if(!panel)return;activeKey=key;const files=groups[key]||[];panel.hidden=!files.length;if(!files.length)return;
+ panel.innerHTML='<h3>📚 Original lecture PDFs</h3><p class="pdfnote">Your original lecture slides and diagrams, stored in the GitHub lectures folder. These are not the abbreviated revision notes. Tap a lecture to open it below.</p><div class="pdfgrid">'+files.map(([label,file])=>'<button type="button" class="pdflecture" data-file="'+esc(file)+'">'+esc(label)+'</button>').join('')+'</div><div id="lecturePdfViewer" hidden><strong id="lecturePdfTitle"></strong><div class="pdfactions"><a id="lecturePdfOpen" href="#" target="_blank" rel="noopener">Open full PDF in a new tab</a><button type="button" id="lecturePdfClose">Close viewer</button></div><iframe id="lecturePdfFrame" title="Original lecture PDF" loading="lazy"></iframe><p class="pdfnote">On iPad, if the embedded viewer is blank or awkward to scroll, use “Open full PDF in a new tab”.</p></div>';
+ panel.querySelectorAll('.pdflecture').forEach(btn=>btn.addEventListener('click',()=>{
+ panel.querySelectorAll('.pdflecture').forEach(b=>b.classList.toggle('selected',b===btn));
+ const file=btn.dataset.file;const url='lectures/'+encodeURIComponent(file);selected=file;
+ panel.querySelector('#lecturePdfTitle').textContent=btn.textContent;
+ panel.querySelector('#lecturePdfOpen').href=url;
+ panel.querySelector('#lecturePdfFrame').src=url;
+ panel.querySelector('#lecturePdfViewer').hidden=false;
+ panel.querySelector('#lecturePdfViewer').scrollIntoView({block:'nearest',behavior:'smooth'});
+ }));panel.querySelector('#lecturePdfClose').onclick=()=>{panel.querySelector('#lecturePdfViewer').hidden=true;panel.querySelector('#lecturePdfFrame').removeAttribute('src')};
+ }
+ function setup(){if(!window.v17Open||!window.v17Back)return;const original=window.v17Open;window.v17Open=function(key,tab){original(key,tab);draw(key)};const back=window.v17Back;window.v17Back=function(){const p=ensure();if(p)p.hidden=true;back()};
+ const oldSubject=window.openSubject; if(oldSubject)window.openSubject=function(key){window.v17Open(key,'overview')};
+ const hub=document.getElementById('v17Hub');if(hub&&!hub.classList.contains('hidden')){const heading=document.getElementById('v17Title')?.textContent||'';const key=heading.includes('ANA1500')?'ANA1500_General_Anatomy':heading.includes('ANA1501')?'ANA1501_Regional_Anatomy':null;if(key)draw(key)}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();
