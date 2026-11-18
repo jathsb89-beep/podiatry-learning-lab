@@ -1,0 +1,1 @@
+Version 5 adds 25 questions for each of three ANA1500 lectures, saved mistakes and topic statistics. Upload index.html to replace the previous site file. Existing CSV decks remain unchanged. Progress is local to the browser. Some questions are knowledge recall and repeat related learning objectives; they are not past-paper questions.
