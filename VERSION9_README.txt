@@ -1,0 +1,1 @@
+Version 9: Upload index.html and gluteus_medius_atlas.png to the ROOT of the existing GitHub repository. Keep all existing files, including gluteal_posterior.webp and pelvis_anterior.webp. Back up progress first. AI-generated anatomical plate is educational and should be checked against course materials. Animated movements are conceptual, not 3D biomechanics.
