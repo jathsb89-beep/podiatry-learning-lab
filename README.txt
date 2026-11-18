@@ -1,0 +1,1 @@
+Podiatry Learning Lab starter website. Upload index.html to the root of a GitHub Pages repository, or open it in a browser. Progress is saved in the browser on the current device. The CSV files are Anki-importable. This starter contains 64 text cards and does not yet contain all lecture topics or diagrams.
