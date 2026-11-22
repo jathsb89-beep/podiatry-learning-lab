@@ -619,4 +619,31 @@ const obs=new MutationObserver(()=>{if(document.getElementById('v20Atlas')&&!doc
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();
-</script></body></html>
+</script>
+<style id="v24-study-workspace-style">
+#v24Workspace{background:#fff;border:1px solid #d6e3ef;border-radius:16px;padding:18px;margin:16px 0;scroll-margin-top:16px}
+#v24Workspace h3{color:#164b80;margin:0 0 8px}#v24Workspace select,#v24Workspace textarea{width:100%;max-width:100%;font:inherit;border:1px solid #c7d7e7;border-radius:10px;padding:12px;background:#fff;color:#203b55}
+#v24Workspace textarea{min-height:145px;resize:vertical;line-height:1.5}
+#v24Workspace .v24grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+#v24Workspace .v24check{display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid #dce6f1;border-radius:10px;background:#f7faff}
+#v24Workspace .v24check input{margin-top:4px;accent-color:#1768ab}
+#v24Workspace .v24small{color:#627890;font-size:.9rem}#v24Workspace .v24actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+#v24Workspace .v24actions a{display:inline-block;padding:10px 14px;border-radius:10px;background:#1768ab;color:white;text-decoration:none;font-weight:700}
+</style>
+<script id="v24-study-workspace">
+(function(){
+ const keyPrefix='podiatry-v24-';let currentSubject='',currentFile='';
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function ensure(){const hub=document.getElementById('v17Hub');if(!hub)return null;let p=document.getElementById('v24Workspace');if(!p){p=document.createElement('section');p.id='v24Workspace';p.hidden=true;const pdf=document.getElementById('lecturePdfPanel');if(pdf)pdf.insertAdjacentElement('afterend',p);else hub.insertBefore(p,document.getElementById('v17Content'));}return p;}
+ function render(subject){const p=ensure(),pdf=document.getElementById('lecturePdfPanel');if(!p||!pdf)return;currentSubject=subject;
+ const buttons=[...pdf.querySelectorAll('.pdflecture')];p.hidden=!buttons.length;if(!buttons.length)return;
+ const choices=buttons.map(b=>({file:b.dataset.file,label:b.textContent}));if(!choices.some(c=>c.file===currentFile))currentFile=choices[0].file;
+ p.innerHTML='<h3>📝 Lecture study workspace</h3><p class="v24small">Choose a lecture to track revision and write your own notes. Your entries are saved in this browser on this device. The full university slides remain the primary source; this workspace does not replace them.</p><label for="v24Lecture"><strong>Lecture</strong></label><select id="v24Lecture">'+choices.map(c=>'<option value="'+esc(c.file)+'"'+(c.file===currentFile?' selected':'')+'>'+esc(c.label)+'</option>').join('')+'</select><div class="v24actions"><a id="v24Open" target="_blank" rel="noopener">📖 Open original lecture PDF</a><button type="button" id="v24Copy">Copy my revision notes</button></div><h4>Revision checklist</h4><div class="v24grid" id="v24Checklist"></div><label for="v24Notes"><strong>My detailed lecture notes</strong></label><textarea id="v24Notes" placeholder="Write definitions, key mechanisms, anatomical structures, comparisons and difficult concepts from your lecture slides here..."></textarea><p class="v24small" id="v24Saved" aria-live="polite">Saved locally on this device.</p>';
+ const select=p.querySelector('#v24Lecture');select.onchange=()=>{currentFile=select.value;fill()};p.querySelector('#v24Copy').onclick=()=>{const t=p.querySelector('#v24Notes').value;if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>p.querySelector('#v24Saved').textContent='Copied your notes.').catch(()=>p.querySelector('#v24Saved').textContent='Select and copy the notes manually.');else{p.querySelector('#v24Notes').select();p.querySelector('#v24Saved').textContent='Notes selected; choose Copy.'}};
+ function fill(){const k=keyPrefix+currentSubject+'-'+currentFile;const state=JSON.parse(localStorage.getItem(k)||'{}');p.querySelector('#v24Open').href='lectures/'+encodeURIComponent(currentFile);const checks=['Read the original lecture','Identify key definitions and structures','Review diagrams / tables','Practise recall without looking','Complete MCQs and revisit weak areas'];p.querySelector('#v24Checklist').innerHTML=checks.map((c,i)=>'<label class="v24check"><input type="checkbox" data-i="'+i+'" '+((state.done||[]).includes(i)?'checked':'')+'><span>'+esc(c)+'</span></label>').join('');const area=p.querySelector('#v24Notes');area.value=state.notes||'';const save=()=>{const done=[...p.querySelectorAll('input[type=checkbox]:checked')].map(x=>Number(x.dataset.i));localStorage.setItem(k,JSON.stringify({notes:area.value,done}));p.querySelector('#v24Saved').textContent='Saved locally on this device.'};area.oninput=save;p.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=save)}fill();
+ }
+ function setup(){const old=window.v17Open;if(typeof old!=='function')return;window.v17Open=function(key,tab){old(key,tab);render(key)};const oldBack=window.v17Back;if(typeof oldBack==='function')window.v17Back=function(){const p=ensure();if(p)p.hidden=true;oldBack()};const oldLibrary=window.v21OpenLibrary;if(typeof oldLibrary==='function')window.v21OpenLibrary=function(key){window.v17Open(key,'overview');document.getElementById('lecturePdfPanel')?.scrollIntoView({block:'start',behavior:'smooth'})};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
+</script>
+</body></html>
